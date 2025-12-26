@@ -1,0 +1,23 @@
+{
+  "name": "@app-kit/api",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.6",
+    "hono": "^4.11.2"
+  },
+  "devDependencies": {
+    "@app-kit/eslint-config": "workspace:^",
+    "@types/node": "^20.11.17",
+    "eslint": "^9.39.2",
+    "eslint-plugin-drizzle": "^0.2.3",
+    "globals": "^16.5.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.8.3"
+  }
+}
