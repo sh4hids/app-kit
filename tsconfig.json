@@ -3,6 +3,8 @@
     "target": "ESNext",
     "lib": ["ESNext"],
     "moduleDetection": "force",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

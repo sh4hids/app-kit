@@ -1,22 +1,33 @@
 {
   "name": "@app-kit/api",
   "type": "module",
+  "private": true,
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@hono/node-server": "^1.19.6",
-    "hono": "^4.11.2"
+    "@hono/zod-openapi": "^1.2.0",
+    "dotenv": "^17.2.3",
+    "dotenv-expand": "^12.0.3",
+    "hono": "^4.11.2",
+    "hono-pino": "^0.10.3",
+    "pino": "^10.1.0",
+    "pino-pretty": "^13.1.3",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@app-kit/eslint-config": "workspace:^",
-    "@types/node": "^20.11.17",
+    "@app-kit/prettier-config": "workspace:^",
+    "@types/node": "^20.19.27",
     "eslint": "^9.39.2",
     "eslint-plugin-drizzle": "^0.2.3",
     "globals": "^16.5.0",
+    "prettier": "^3.7.4",
     "tsx": "^4.7.1",
     "typescript": "^5.8.3"
   }

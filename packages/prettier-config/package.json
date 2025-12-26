@@ -1,0 +1,13 @@
+{
+  "name": "@app-kit/prettier-config",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./prettier.config.js",
+    "./create-config": {
+      "types": "./create-config.d.ts",
+      "import": "./create-config.js"
+    }
+  }
+}

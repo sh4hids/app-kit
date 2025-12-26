@@ -1,16 +1,13 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "module": "NodeNext",
-    "verbatimModuleSyntax": true,
-    "types": ["node"],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-    "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
       "@/api/*": ["./src/*"]
-    }
+    },
+    "types": ["node"]
   },
   "exclude": ["node_modules"]
 }
