@@ -1,14 +1,14 @@
-import { createApp } from '@/api/lib';
+import { configureOpenAPI, createApp } from '@/api/lib';
+import { rootRoute, usersRoute } from '@/api/routes';
 
 const app = createApp();
 
-app.get('/', (c) => {
-  return c.text('Hello World!');
-});
+const routes = [rootRoute, usersRoute];
 
-app.get('/error', (c) => {
-  c.var.logger.info('This is a log');
-  throw new Error('This is an error');
+configureOpenAPI(app);
+
+routes.forEach((route) => {
+  app.route('/', route);
 });
 
 export default app;
