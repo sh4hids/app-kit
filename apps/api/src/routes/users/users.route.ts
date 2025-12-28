@@ -1,16 +1,22 @@
 import { createRoute, z } from '@hono/zod-openapi';
 
-import { userCreateSchema, userSelectSchema } from '@/api/db/schema';
+import { userCreateSchema, userSelectSchema, userUpdateSchema } from '@/api/db/schema';
 import {
   createErrorSchema,
   createRouter,
   HttpStatusCodes,
   IdParamsSchema,
   jsonContent,
+  jsonContentOneOf,
   jsonContentRequired,
   notFoundSchema,
 } from '@/api/lib';
-import { createUserHandler, getUserByIdHandler, listUserHandler } from '@/api/routes/users';
+import {
+  createUserHandler,
+  getUserByIdHandler,
+  listUserHandler,
+  updateUserHandler,
+} from '@/api/routes/users';
 
 const tags = ['Users'];
 
@@ -56,13 +62,33 @@ const getUserByIdRoute = createRoute({
   },
 });
 
+const updateUserRoute = createRoute({
+  tags,
+  path: '/users/{id}',
+  request: {
+    params: IdParamsSchema,
+    body: jsonContentRequired(userUpdateSchema, 'The user updates'),
+  },
+  method: 'patch',
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(userSelectSchema, 'Updated user'),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(notFoundSchema, 'User not found'),
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContentOneOf(
+      [createErrorSchema(userCreateSchema), createErrorSchema(IdParamsSchema)],
+      'Validation error',
+    ),
+  },
+});
+
 const router = createRouter()
   .openapi(listUserRoute, listUserHandler)
   .openapi(createUserRoute, createUserHandler)
-  .openapi(getUserByIdRoute, getUserByIdHandler);
+  .openapi(getUserByIdRoute, getUserByIdHandler)
+  .openapi(updateUserRoute, updateUserHandler);
 
 export type ListUserRoute = typeof listUserRoute;
 export type CreateUserRoute = typeof createUserRoute;
 export type GetUserByIdRoute = typeof getUserByIdRoute;
+export type UpdateUserRoute = typeof updateUserRoute;
 
 export default router;

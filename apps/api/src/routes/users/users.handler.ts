@@ -1,7 +1,14 @@
+import { eq } from 'drizzle-orm';
+
 import { db } from '@/api/db';
 import { users } from '@/api/db/schema';
 import { type AppRouteHandler, HttpStatusCodes, HttpStatusPhrases } from '@/api/lib';
-import type { CreateUserRoute, GetUserByIdRoute, ListUserRoute } from '@/api/routes/users';
+import type {
+  CreateUserRoute,
+  GetUserByIdRoute,
+  ListUserRoute,
+  UpdateUserRoute,
+} from '@/api/routes/users';
 
 export const listUserHandler: AppRouteHandler<ListUserRoute> = async (c) => {
   const users = await db.query.users.findMany();
@@ -21,6 +28,18 @@ export const getUserByIdHandler: AppRouteHandler<GetUserByIdRoute> = async (c) =
       return operators.eq(fields.id, id);
     },
   });
+
+  if (!user) {
+    return c.json({ message: HttpStatusPhrases.NOT_FOUND }, HttpStatusCodes.NOT_FOUND);
+  }
+
+  return c.json(user, HttpStatusCodes.OK);
+};
+
+export const updateUserHandler: AppRouteHandler<UpdateUserRoute> = async (c) => {
+  const { id } = c.req.valid('param');
+  const updates = c.req.valid('json');
+  const [user] = await db.update(users).set(updates).where(eq(users.id, id)).returning();
 
   if (!user) {
     return c.json({ message: HttpStatusPhrases.NOT_FOUND }, HttpStatusCodes.NOT_FOUND);
