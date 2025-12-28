@@ -5,10 +5,12 @@ import {
   createErrorSchema,
   createRouter,
   HttpStatusCodes,
+  IdParamsSchema,
   jsonContent,
   jsonContentRequired,
+  notFoundSchema,
 } from '@/api/lib';
-import { createUserHandler, listUserHandler } from '@/api/routes/users';
+import { createUserHandler, getUserByIdHandler, listUserHandler } from '@/api/routes/users';
 
 const tags = ['Users'];
 
@@ -37,11 +39,30 @@ const createUserRoute = createRoute({
   },
 });
 
+const getUserByIdRoute = createRoute({
+  tags,
+  path: '/users/{id}',
+  request: {
+    params: IdParamsSchema,
+  },
+  method: 'get',
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(userSelectSchema, 'Requested user'),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(notFoundSchema, 'User not found'),
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+      createErrorSchema(IdParamsSchema),
+      'Invalid id error',
+    ),
+  },
+});
+
 const router = createRouter()
   .openapi(listUserRoute, listUserHandler)
-  .openapi(createUserRoute, createUserHandler);
+  .openapi(createUserRoute, createUserHandler)
+  .openapi(getUserByIdRoute, getUserByIdHandler);
 
 export type ListUserRoute = typeof listUserRoute;
 export type CreateUserRoute = typeof createUserRoute;
+export type GetUserByIdRoute = typeof getUserByIdRoute;
 
 export default router;

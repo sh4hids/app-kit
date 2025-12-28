@@ -2,6 +2,7 @@ import { OpenApiGeneratorV3, OpenAPIRegistry } from '@asteasolutions/zod-to-open
 import { z } from '@hono/zod-openapi';
 
 import type { ZodIssue, ZodSchema } from '@/api/lib';
+import { HttpStatusPhrases } from '@/api/lib';
 
 export const jsonContent = <T extends ZodSchema>(schema: T, description: string) => {
   return {
@@ -104,3 +105,77 @@ export const createErrorSchema = <T extends ZodSchema>(schema: T) => {
       }),
   });
 };
+
+export const IdParamsSchema = z.object({
+  id: z.coerce.number().openapi({
+    param: {
+      name: 'id',
+      in: 'path',
+      required: true,
+    },
+    required: ['id'],
+    example: 42,
+  }),
+});
+
+export const IdUUIDParamsSchema = z.object({
+  id: z.uuid().openapi({
+    param: {
+      name: 'id',
+      in: 'path',
+      required: true,
+    },
+    required: ['id'],
+    example: '4651e634-a530-4484-9b09-9616a28f35e3',
+  }),
+});
+
+// Regular expression to validate slug format: alphanumeric, underscores, and dashes
+const slugReg = /^[\w-]+$/;
+const SLUG_ERROR_MESSAGE = 'Slug can only contain letters, numbers, dashes, and underscores';
+
+export const SlugParamsSchema = z.object({
+  slug: z
+    .string()
+    .regex(slugReg, SLUG_ERROR_MESSAGE)
+    .openapi({
+      param: {
+        name: 'slug',
+        in: 'path',
+        required: true,
+      },
+      required: ['slug'],
+      example: 'slug-param-schema',
+    }),
+});
+
+type Validator = 'uuid' | 'nanoid' | 'cuid' | 'cuid2' | 'ulid';
+
+export interface ParamsSchema {
+  name?: string;
+  validator?: Validator | undefined;
+}
+
+const examples: Record<Validator, string> = {
+  uuid: '4651e634-a530-4484-9b09-9616a28f35e3',
+  nanoid: 'V1StGXR8_Z5jdHi6B-myT',
+  cuid: 'cjld2cjxh0000qzrmn831i7rn',
+  cuid2: 'tz4a98xxat96iws9zmbrgj3a',
+  ulid: '01ARZ3NDEKTSV4RRFFQ69G5FAV',
+};
+
+export const getParamsSchema = ({ name = 'id', validator = 'uuid' }: ParamsSchema) => {
+  return z.object({
+    [name]: z[validator]().openapi({
+      param: {
+        name,
+        in: 'path',
+        required: true,
+      },
+      required: [name],
+      example: examples[validator],
+    }),
+  });
+};
+
+export const notFoundSchema = createMessageObjectSchema(HttpStatusPhrases.NOT_FOUND);
