@@ -2,7 +2,13 @@ import { eq } from 'drizzle-orm';
 
 import { db } from '@/api/db';
 import { users } from '@/api/db/schema';
-import { type AppRouteHandler, HttpStatusCodes, HttpStatusPhrases } from '@/api/lib';
+import {
+  type AppRouteHandler,
+  HttpStatusCodes,
+  HttpStatusPhrases,
+  ZOD_ERROR_CODES,
+  ZOD_ERROR_MESSAGES,
+} from '@/api/lib';
 import type {
   CreateUserRoute,
   DeleteUserRoute,
@@ -40,6 +46,26 @@ export const getUserByIdHandler: AppRouteHandler<GetUserByIdRoute> = async (c) =
 export const updateUserHandler: AppRouteHandler<UpdateUserRoute> = async (c) => {
   const { id } = c.req.valid('param');
   const updates = c.req.valid('json');
+
+  if (Object.keys(updates).length === 0) {
+    return c.json(
+      {
+        success: false,
+        error: {
+          issues: [
+            {
+              code: ZOD_ERROR_CODES.INVALID_UPDATES,
+              path: [],
+              message: ZOD_ERROR_MESSAGES.NO_UPDATES,
+            },
+          ],
+          name: 'ZodError',
+        },
+      },
+      HttpStatusCodes.UNPROCESSABLE_ENTITY,
+    );
+  }
+
   const [user] = await db.update(users).set(updates).where(eq(users.id, id)).returning();
 
   if (!user) {

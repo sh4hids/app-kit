@@ -1,6 +1,7 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
+import type { Schema } from 'hono';
 
-import { type AppBindings, defaultHook } from '@/api/lib';
+import { type AppBindings, type AppOpenAPI, defaultHook } from '@/api/lib';
 import { notFound, onError, pinoLogger } from '@/api/middlewares';
 
 export function createRouter() {
@@ -18,4 +19,8 @@ export function createApp() {
   app.onError(onError);
 
   return app;
+}
+
+export function createTestApp<S extends Schema>(router: AppOpenAPI<S>) {
+  return createApp().route('/', router);
 }

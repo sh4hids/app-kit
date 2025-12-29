@@ -1,5 +1,6 @@
 import { OpenApiGeneratorV3, OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import { z } from '@hono/zod-openapi';
+import type z4 from 'zod/v4';
 
 import type { ZodIssue, ZodSchema } from '@/api/lib';
 import { HttpStatusPhrases } from '@/api/lib';
@@ -179,3 +180,7 @@ export const getParamsSchema = ({ name = 'id', validator = 'uuid' }: ParamsSchem
 };
 
 export const notFoundSchema = createMessageObjectSchema(HttpStatusPhrases.NOT_FOUND);
+
+export function toZodV4SchemaTyped<T extends z4.ZodTypeAny>(schema: T) {
+  return schema as unknown as z.ZodType<z4.infer<T>>;
+}

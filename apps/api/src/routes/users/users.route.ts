@@ -74,8 +74,8 @@ const updateUserRoute = createRoute({
   responses: {
     [HttpStatusCodes.OK]: jsonContent(userSelectSchema, 'Updated user'),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(notFoundSchema, 'User not found'),
-    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContentOneOf(
-      [createErrorSchema(userCreateSchema), createErrorSchema(IdParamsSchema)],
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+      createErrorSchema(userCreateSchema).or(createErrorSchema(IdParamsSchema)),
       'Validation error',
     ),
   },
