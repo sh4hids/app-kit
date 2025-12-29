@@ -5,6 +5,7 @@ import { users } from '@/api/db/schema';
 import { type AppRouteHandler, HttpStatusCodes, HttpStatusPhrases } from '@/api/lib';
 import type {
   CreateUserRoute,
+  DeleteUserRoute,
   GetUserByIdRoute,
   ListUserRoute,
   UpdateUserRoute,
@@ -46,4 +47,15 @@ export const updateUserHandler: AppRouteHandler<UpdateUserRoute> = async (c) => 
   }
 
   return c.json(user, HttpStatusCodes.OK);
+};
+
+export const deleteUserHandler: AppRouteHandler<DeleteUserRoute> = async (c) => {
+  const { id } = c.req.valid('param');
+  const result = await db.delete(users).where(eq(users.id, id));
+
+  if (result.rowsAffected === 0) {
+    return c.json({ message: HttpStatusPhrases.NOT_FOUND }, HttpStatusCodes.NOT_FOUND);
+  }
+
+  return c.body(null, HttpStatusCodes.NO_CONTENT);
 };

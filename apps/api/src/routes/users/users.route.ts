@@ -13,6 +13,7 @@ import {
 } from '@/api/lib';
 import {
   createUserHandler,
+  deleteUserHandler,
   getUserByIdHandler,
   listUserHandler,
   updateUserHandler,
@@ -80,15 +81,36 @@ const updateUserRoute = createRoute({
   },
 });
 
+const deleteUserRoute = createRoute({
+  tags,
+  path: '/users/{id}',
+  request: {
+    params: IdParamsSchema,
+  },
+  method: 'delete',
+  responses: {
+    [HttpStatusCodes.NO_CONTENT]: {
+      description: 'User deleted',
+    },
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(notFoundSchema, 'User not found'),
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+      createErrorSchema(IdParamsSchema),
+      'Invalid id error',
+    ),
+  },
+});
+
 const router = createRouter()
   .openapi(listUserRoute, listUserHandler)
   .openapi(createUserRoute, createUserHandler)
   .openapi(getUserByIdRoute, getUserByIdHandler)
-  .openapi(updateUserRoute, updateUserHandler);
+  .openapi(updateUserRoute, updateUserHandler)
+  .openapi(deleteUserRoute, deleteUserHandler);
 
 export type ListUserRoute = typeof listUserRoute;
 export type CreateUserRoute = typeof createUserRoute;
 export type GetUserByIdRoute = typeof getUserByIdRoute;
 export type UpdateUserRoute = typeof updateUserRoute;
+export type DeleteUserRoute = typeof deleteUserRoute;
 
 export default router;
