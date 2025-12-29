@@ -14,17 +14,17 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0(zod@4.2.1)
       '@hono/node-server':
-        specifier: ^1.19.6
-        version: 1.19.7(hono@4.11.2)
+        specifier: ^1.19.7
+        version: 1.19.7(hono@4.11.3)
       '@hono/zod-openapi':
         specifier: ^1.2.0
-        version: 1.2.0(hono@4.11.2)(zod@4.2.1)
+        version: 1.2.0(hono@4.11.3)(zod@4.2.1)
       '@libsql/client':
         specifier: ^0.15.15
         version: 0.15.15
       '@scalar/hono-api-reference':
         specifier: ^0.9.30
-        version: 0.9.30(hono@4.11.2)
+        version: 0.9.30(hono@4.11.3)
       dotenv:
         specifier: ^17.2.3
         version: 17.2.3
@@ -38,11 +38,11 @@ importers:
         specifier: ^0.8.3
         version: 0.8.3(drizzle-orm@0.45.1(@libsql/client@0.15.15))(zod@4.2.1)
       hono:
-        specifier: ^4.11.2
-        version: 4.11.2
+        specifier: ^4.11.3
+        version: 4.11.3
       hono-pino:
         specifier: ^0.10.3
-        version: 0.10.3(hono@4.11.2)(pino@10.1.0)
+        version: 0.10.3(hono@4.11.3)(pino@10.1.0)
       pino:
         specifier: ^10.1.0
         version: 10.1.0
@@ -78,20 +78,11 @@ importers:
         specifier: ^3.7.4
         version: 3.7.4
       tsx:
-        specifier: ^4.7.1
+        specifier: ^4.21.0
         version: 4.21.0
       typescript:
-        specifier: ^5.8.3
+        specifier: ^5.9.3
         version: 5.9.3
-
-  packages/api-utils:
-    devDependencies:
-      '@types/node':
-        specifier: ^20.19.27
-        version: 20.19.27
-      hono:
-        specifier: ^4.11.2
-        version: 4.11.2
 
   packages/eslint-config:
     devDependencies:
@@ -1512,8 +1503,8 @@ packages:
       hono: '>=4.0.0'
       pino: '>=7.1.0'
 
-  hono@4.11.2:
-    resolution: {integrity: sha512-o+avdUAD1v94oHkjGBhiMhBV4WBHxhbu0+CUVH78hhphKy/OKQLxtKjkmmNcrMlbYAhAbsM/9F+l3KnYxyD3Lg==}
+  hono@4.11.3:
+    resolution: {integrity: sha512-PmQi306+M/ct/m5s66Hrg+adPnkD5jiO6IjA7WhWw0gSBSo1EcRegwuI1deZ+wd5pzCGynCcn2DprnE4/yEV4w==}
     engines: {node: '>=16.9.0'}
 
   ignore@5.3.2:
@@ -2032,8 +2023,8 @@ packages:
     resolution: {integrity: sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==}
     engines: {node: '>=12.0.0'}
 
-  ts-api-utils@2.1.0:
-    resolution: {integrity: sha512-CUgTZL1irw8u29bzrOD/nH85jqyc74D6SshFgujOIA7osm2Rz7dYH77agkx7H4FBNxDq7Cjf+IjaX/8zwFW+ZQ==}
+  ts-api-utils@2.3.0:
+    resolution: {integrity: sha512-6eg3Y9SF7SsAvGzRHQvvc1skDAhwI4YQ32ui1scxD1Ccr0G5qIIbUBT3pFTKX8kmWIQClHobtUdNuaBgwdfdWg==}
     engines: {node: '>=18.12'}
     peerDependencies:
       typescript: '>=4.8.4'
@@ -2547,21 +2538,21 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@hono/node-server@1.19.7(hono@4.11.2)':
+  '@hono/node-server@1.19.7(hono@4.11.3)':
     dependencies:
-      hono: 4.11.2
+      hono: 4.11.3
 
-  '@hono/zod-openapi@1.2.0(hono@4.11.2)(zod@4.2.1)':
+  '@hono/zod-openapi@1.2.0(hono@4.11.3)(zod@4.2.1)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 8.2.0(zod@4.2.1)
-      '@hono/zod-validator': 0.7.6(hono@4.11.2)(zod@4.2.1)
-      hono: 4.11.2
+      '@hono/zod-validator': 0.7.6(hono@4.11.3)(zod@4.2.1)
+      hono: 4.11.3
       openapi3-ts: 4.5.0
       zod: 4.2.1
 
-  '@hono/zod-validator@0.7.6(hono@4.11.2)(zod@4.2.1)':
+  '@hono/zod-validator@0.7.6(hono@4.11.3)(zod@4.2.1)':
     dependencies:
-      hono: 4.11.2
+      hono: 4.11.3
       zod: 4.2.1
 
   '@humanfs/core@0.19.1': {}
@@ -2666,10 +2657,10 @@ snapshots:
 
   '@scalar/helpers@0.2.4': {}
 
-  '@scalar/hono-api-reference@0.9.30(hono@4.11.2)':
+  '@scalar/hono-api-reference@0.9.30(hono@4.11.3)':
     dependencies:
       '@scalar/core': 0.3.28
-      hono: 4.11.2
+      hono: 4.11.3
 
   '@scalar/types@0.5.4':
     dependencies:
@@ -2701,7 +2692,7 @@ snapshots:
       eslint: 9.39.2
       ignore: 7.0.5
       natural-compare: 1.4.0
-      ts-api-utils: 2.1.0(typescript@5.9.3)
+      ts-api-utils: 2.3.0(typescript@5.9.3)
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
@@ -2743,7 +2734,7 @@ snapshots:
       '@typescript-eslint/utils': 8.50.1(eslint@9.39.2)(typescript@5.9.3)
       debug: 4.4.3
       eslint: 9.39.2
-      ts-api-utils: 2.1.0(typescript@5.9.3)
+      ts-api-utils: 2.3.0(typescript@5.9.3)
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
@@ -2760,7 +2751,7 @@ snapshots:
       minimatch: 9.0.5
       semver: 7.7.3
       tinyglobby: 0.2.15
-      ts-api-utils: 2.1.0(typescript@5.9.3)
+      ts-api-utils: 2.3.0(typescript@5.9.3)
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
@@ -3491,13 +3482,13 @@ snapshots:
     dependencies:
       hermes-estree: 0.25.1
 
-  hono-pino@0.10.3(hono@4.11.2)(pino@10.1.0):
+  hono-pino@0.10.3(hono@4.11.3)(pino@10.1.0):
     dependencies:
       defu: 6.1.4
-      hono: 4.11.2
+      hono: 4.11.3
       pino: 10.1.0
 
-  hono@4.11.2: {}
+  hono@4.11.3: {}
 
   ignore@5.3.2: {}
 
@@ -4088,7 +4079,7 @@ snapshots:
       fdir: 6.5.0(picomatch@4.0.3)
       picomatch: 4.0.3
 
-  ts-api-utils@2.1.0(typescript@5.9.3):
+  ts-api-utils@2.3.0(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
 
