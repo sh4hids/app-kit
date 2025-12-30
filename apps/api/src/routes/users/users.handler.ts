@@ -12,23 +12,23 @@ import {
 import type {
   CreateUserRoute,
   DeleteUserRoute,
+  GetAllUsersRoute,
   GetUserByIdRoute,
-  ListUserRoute,
   UpdateUserRoute,
 } from '@/api/routes/users';
 
-export const listUserHandler: AppRouteHandler<ListUserRoute> = async (c) => {
+export const getAll: AppRouteHandler<GetAllUsersRoute> = async (c) => {
   const users = await db.query.users.findMany();
   return c.json(users, HttpStatusCodes.OK);
 };
 
-export const createUserHandler: AppRouteHandler<CreateUserRoute> = async (c) => {
+export const create: AppRouteHandler<CreateUserRoute> = async (c) => {
   const user = c.req.valid('json');
   const [newUser] = await db.insert(users).values(user).returning();
   return c.json(newUser, HttpStatusCodes.OK);
 };
 
-export const getUserByIdHandler: AppRouteHandler<GetUserByIdRoute> = async (c) => {
+export const getById: AppRouteHandler<GetUserByIdRoute> = async (c) => {
   const { id } = c.req.valid('param');
   const user = await db.query.users.findFirst({
     where(fields, operators) {
@@ -43,7 +43,7 @@ export const getUserByIdHandler: AppRouteHandler<GetUserByIdRoute> = async (c) =
   return c.json(user, HttpStatusCodes.OK);
 };
 
-export const updateUserHandler: AppRouteHandler<UpdateUserRoute> = async (c) => {
+export const update: AppRouteHandler<UpdateUserRoute> = async (c) => {
   const { id } = c.req.valid('param');
   const updates = c.req.valid('json');
 
@@ -75,7 +75,7 @@ export const updateUserHandler: AppRouteHandler<UpdateUserRoute> = async (c) => 
   return c.json(user, HttpStatusCodes.OK);
 };
 
-export const deleteUserHandler: AppRouteHandler<DeleteUserRoute> = async (c) => {
+export const remove: AppRouteHandler<DeleteUserRoute> = async (c) => {
   const { id } = c.req.valid('param');
   const result = await db.delete(users).where(eq(users.id, id));
 

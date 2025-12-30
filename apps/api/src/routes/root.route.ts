@@ -9,7 +9,7 @@ const router = createRouter().openapi(
     path: '/health',
     responses: {
       [HttpStatusCodes.OK]: jsonContent(
-        createMessageObjectSchema('API is up and running...'),
+        createMessageObjectSchema('API is up and running!'),
         'API health',
       ),
     },
@@ -17,7 +17,7 @@ const router = createRouter().openapi(
   (c) => {
     return c.json(
       {
-        message: 'API is up and running...',
+        message: 'API is up and running',
       },
       HttpStatusCodes.OK,
     );

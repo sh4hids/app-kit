@@ -7,21 +7,14 @@ import {
   HttpStatusCodes,
   IdParamsSchema,
   jsonContent,
-  jsonContentOneOf,
   jsonContentRequired,
   notFoundSchema,
 } from '@/api/lib';
-import {
-  createUserHandler,
-  deleteUserHandler,
-  getUserByIdHandler,
-  listUserHandler,
-  updateUserHandler,
-} from '@/api/routes/users';
+import { userHandlers } from '@/api/routes/users';
 
 const tags = ['Users'];
 
-const listUserRoute = createRoute({
+const getAllUsersRoute = createRoute({
   tags,
   path: '/users',
   method: 'get',
@@ -101,13 +94,13 @@ const deleteUserRoute = createRoute({
 });
 
 const router = createRouter()
-  .openapi(listUserRoute, listUserHandler)
-  .openapi(createUserRoute, createUserHandler)
-  .openapi(getUserByIdRoute, getUserByIdHandler)
-  .openapi(updateUserRoute, updateUserHandler)
-  .openapi(deleteUserRoute, deleteUserHandler);
+  .openapi(getAllUsersRoute, userHandlers.getAll)
+  .openapi(createUserRoute, userHandlers.create)
+  .openapi(getUserByIdRoute, userHandlers.getById)
+  .openapi(updateUserRoute, userHandlers.update)
+  .openapi(deleteUserRoute, userHandlers.remove);
 
-export type ListUserRoute = typeof listUserRoute;
+export type GetAllUsersRoute = typeof getAllUsersRoute;
 export type CreateUserRoute = typeof createUserRoute;
 export type GetUserByIdRoute = typeof getUserByIdRoute;
 export type UpdateUserRoute = typeof updateUserRoute;
